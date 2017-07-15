@@ -10,7 +10,8 @@ class UrlMappings {
         }
 
         get "/books" (controller: "book", action: "list")
-        post "/book/" (controller: "book", action: "create")
+        post "/book" (controller: "book", action: "create")
+        put "/book/$id" (controller: "book", action: "update")
         get "/book/$id" (controller: "book", action: "get")
         delete "/book/$id" (controller: "book", action: "delete")
 

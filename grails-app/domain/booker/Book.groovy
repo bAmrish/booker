@@ -6,6 +6,7 @@ class Book {
     String title
     String author
     String rev
+    int ratings
 
     static constraints = {
 

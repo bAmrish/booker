@@ -25,6 +25,14 @@ class BookController {
         render bookService.get(params.id) as JSON
     }
 
+    def update() {
+        String id = params.id
+        Map book = request.getJSON()
+        Book updatedBook = new Book(book)
+        Map response = bookService.update(id, updatedBook)
+        render response as JSON
+    }
+
     def delete() {
         String bookId = params.id
         Map bookMap = bookService.delete(bookId)

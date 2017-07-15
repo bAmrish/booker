@@ -67,6 +67,17 @@ class CouchDbService {
         return response
     }
 
+    Map updateDocument(String id, Map document, String dbName) {
+        Map response = http.request(PUT, JSON) { request ->
+            uri.path = "/$dbName/$id"
+            body = document
+        }
+
+        println response
+
+        return response
+    }
+
     Map deleteDocument(String id, String rev, String dbName) {
         Map response = http.request(DELETE, JSON) { request ->
             uri.path = "/$dbName/$id"

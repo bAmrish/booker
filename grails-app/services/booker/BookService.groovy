@@ -27,6 +27,14 @@ class BookService {
         return  dbObject2Book(response)
     }
 
+    Map update(String id, Book book) {
+        Map b = book.asMap()
+        Book originalBook = get(id)
+        b._rev = originalBook.rev
+        Map response = couchDbService.updateDocument(id, b, booksDBName)
+        return response
+    }
+
     Map delete(String id){
         Book book = get(id)
         Map response = couchDbService.deleteDocument(id, book.rev, booksDBName)
