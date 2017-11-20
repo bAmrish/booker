@@ -21,7 +21,7 @@ RUN rm -rf  ${CATALINA_HOME}/webapps/examples \
 			${CATALINA_HOME}/RUNNING.txt ${CATALINA_HOME}/bin/*.bat  \
 			${CATALINA_HOME}/bin/*.tar.gz
 
-ADD build/libs/booker.war ${CATALINA_HOME}/webapps/
+ADD out/booker.war ${CATALINA_HOME}/webapps/
 
 EXPOSE 8080
 
