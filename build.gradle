@@ -54,6 +54,10 @@ bootRun {
     addResources = true
 }
 
+war {
+    destinationDir = new java.io.File('out')
+    archiveName = 'booker.war'
+}
 
 assets {
     minifyJs = true
