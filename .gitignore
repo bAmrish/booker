@@ -6,7 +6,6 @@ build/
 *.iml
 *.ipr
 *.iws
-out/
 data/
 .project
 .settings
