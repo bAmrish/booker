@@ -1,0 +1,14 @@
+version: "2"
+services:
+  couchdb:
+    image: apache/couchdb
+    volumes:
+      - ./data:/opt/couchdb/data
+  booker:
+    image: bamrish/booker:0.1
+    environment:
+      - COUCH_DB_SERVER=couchdb
+    ports:
+      - "9091: 8080"
+    depends_on:
+      - couchdb
