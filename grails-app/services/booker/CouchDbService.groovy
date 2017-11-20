@@ -10,7 +10,16 @@ import static groovyx.net.http.ContentType.JSON
 @Transactional
 class CouchDbService {
 
-    HTTPBuilder http = new HTTPBuilder("http://localhost:5984", 'application/json')
+    HTTPBuilder http
+
+    CouchDbService(){
+        //Gets the couchdb server name from environment variable.
+        String couchDBServer = System.getenv("COUCH_DB_SERVER")
+        System.out.println("""Couch DB: $couchDBServer""")
+
+        http = new HTTPBuilder("""http://$couchDBServer:5984""", 'application/json')
+    }
+
 
     List getAllDBs() {
         List response = http.get(path: '/_all_dbs')
