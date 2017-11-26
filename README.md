@@ -19,7 +19,7 @@ Booker provides simple CRUD API to manage books. The application stores data in 
 
 - You can view the APIs for this application at by using the self hosted Swagger client.
 - Once you run the application you can visit the following URL: 
---  [http://localhost:8080/webjars/swagger-ui/2.2.5/index.html?url=/apidoc/getDocuments]
+--  (http://localhost:8080/webjars/swagger-ui/2.2.5/index.html?url=/apidoc/getDocuments)
 
 ## Docker
 
