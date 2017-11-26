@@ -15,6 +15,12 @@ class UrlMappings {
         get "/book/$id" (controller: "book", action: "get")
         delete "/book/$id" (controller: "book", action: "delete")
 
+        get "/dbs/" (controller: "DB", action: "index")
+        post "/db/$dbName" (controller: "DB", action: "create")
+        delete "/db/$dbName" (controller: "DB", action: "delete")
+
+        "/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")
+
         "/"(view:"/index")
         "500"(view:'/error')
         "404"(view:'/notFound')

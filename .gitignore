@@ -11,3 +11,4 @@ data/
 .settings
 .classpath
 out/
+*.db

@@ -134,3 +134,23 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+app:
+  couchdb:
+    url: ${COUCH_DB_SERVER_URL}
+
+swagger:
+  info:
+    description: "Swagger Documentation for Booker Application"
+    version: "0.1"
+    title: "Booker APIs"
+    contact:
+      name: "Amrish B"
+      url:  "https://github.com/bAmrish/booker/"
+      email: ""
+    license:
+      name: ""
+      url: ""
+    schemes:
+      - Scheme.HTTP
+    consumes:
+      - "application/json"
