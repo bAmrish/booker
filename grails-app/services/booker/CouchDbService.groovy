@@ -13,11 +13,11 @@ class CouchDbService {
     HTTPBuilder http
 
     CouchDbService(){
-        //Gets the couchdb server name from environment variable.
-        String couchDBServer = System.getenv("COUCH_DB_SERVER")
-        System.out.println("""Couch DB: $couchDBServer""")
+        def config = grails.util.Holders.getGrailsApplication().config
+        String url = config.getProperty('app.couchdb.url')
+        System.out.println("""Couch DB URL: $url""")
 
-        http = new HTTPBuilder("""http://$couchDBServer:5984""", 'application/json')
+        http = new HTTPBuilder(url, 'application/json')
     }
 
 
