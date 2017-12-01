@@ -1,5 +1,6 @@
 package booker
 
+import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client.AMQP.Queue.BindOk
 import com.rabbitmq.client.AMQP.Exchange.DeclareOk
 import com.rabbitmq.client.Channel
@@ -72,5 +73,42 @@ class UserMessengerService {
         }
 
         return """user-inbox-$username"""
+    }
+
+    def sendMessageToUser(String message, String user){
+        String queueName = getUserInboxQueueName(user)
+
+        mqService.call(new ChannelCallable() {
+            @Override
+            String getDescription() {
+                return """Sending message "$message" to $user."""
+            }
+
+            @Override
+            String call(Channel channel) throws IOException {
+
+                String contentType = 'application/json'
+                String contentEncoding = 'UTF-8'
+                String messageId = UUID.randomUUID().toString()
+                int deliveryMode = 2 //persistent
+
+                String routingKey = queueName
+                String exchange = USER_INBOX_EXCHANGE_NAME
+
+                BasicProperties properties = new BasicProperties().builder()
+                    .contentType(contentType)
+                    .contentEncoding(contentEncoding)
+                    .messageId(messageId)
+                    .deliveryMode(deliveryMode)
+                    .build()
+
+                setupUserInboxQueue(queueName, channel)
+
+                channel.basicPublish(exchange, routingKey, properties, message.getBytes(contentEncoding))
+
+                return messageId
+            }
+        })
+
     }
 }
