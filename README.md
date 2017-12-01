@@ -13,7 +13,11 @@ Booker provides simple CRUD API to manage books. The application stores data in 
 
 - You can get started by cloning the repo and importing the projcet into intelliJ
 - In the intellij Run configuration set environment variable for pointing your application to couchDB
--- `COUCH_DB_SERVER_URL`. E.g. if you are running it couchdb locally set it to `http://localhost:5984`
+    - `COUCH_DB_SERVER_URL`. E.g. if you are running it couchdb locally set it to `http://localhost:5984`
+- You will also need to set the logging configuration explicitly to pickup the logback file. This is due to an existing bug in swagger plugin (https://github.com/ajay-kmr/swagger#installation)
+    - E.g. `-Dlogging.config=grails-app/conf/logback.groovy` 
+
+
 
 ## API Documentation:
 
