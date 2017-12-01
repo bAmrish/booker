@@ -5,10 +5,12 @@ import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.ShutdownListener
 import com.rabbitmq.client.ShutdownSignalException
-import grails.transaction.Transactional
 
+import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
+
+import grails.transaction.Transactional
 
 @Transactional
 class RabbitMQService implements ShutdownListener{
@@ -20,6 +22,7 @@ class RabbitMQService implements ShutdownListener{
     RabbitMQService(ConnectionFactory factory) {
         this.factory = factory
         this.connection = null
+        this.executorService = Executors.newSingleThreadScheduledExecutor();
     }
 
     void start(){
@@ -69,28 +72,43 @@ class RabbitMQService implements ShutdownListener{
     }
 
     Channel createChannel(){
-        if(connection !== null){
+        if(connection != null){
             try {
-                connection.createChannel()
+                return connection.createChannel()
             } catch (Exception e){
                 log.error """Failed to create channel.""", e
             }
         }
 
-        return null;
+        return null
     }
 
     void closeChannel(Channel channel){
-        if(channel != null && !channel.isOpen()){
+        if(channel != null && channel.isOpen()){
             try{
                 channel.close()
             } catch (Exception e) {
-                log.error """Failed to close the channel $channel""", e
+                log.error """Failed to close the channel $channel.""", e
             }
 
         }else {
             log.error """Failed to close the channel $channel"""
         }
+    }
+
+    public <T> T call(ChannelCallable<T> callable){
+        Channel channel = createChannel()
+
+        try {
+            log.info """Calling channel with callable ${callable.description}."""
+            return callable.call(channel)
+        } catch (Exception e) {
+            log.error """Failed to call ${callable.description}.""", e
+        } finally {
+            closeChannel(channel)
+        }
+
+        return  null
     }
 }
 
