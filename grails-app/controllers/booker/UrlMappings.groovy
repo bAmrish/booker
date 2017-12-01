@@ -19,6 +19,8 @@ class UrlMappings {
         post "/db/$dbName" (controller: "DB", action: "create")
         delete "/db/$dbName" (controller: "DB", action: "delete")
 
+        post "/log/$message"(controller: "logTesting", action: "log")
+
         "/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")
 
         "/"(view:"/index")
