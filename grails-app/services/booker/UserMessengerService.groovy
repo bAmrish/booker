@@ -117,7 +117,7 @@ class UserMessengerService {
         def queueName = getUserInboxQueueName(user)
         def exchangeName = USER_INBOX_EXCHANGE_NAME
 
-        mqService.call(new ChannelCallable<List<String>>() {
+        mqService.call(new ChannelCallable<List<Map<String, Object>>>() {
             @Override
             String getDescription() {
                 return "Fetching messages for $user."
