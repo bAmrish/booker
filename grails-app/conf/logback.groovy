@@ -34,4 +34,4 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
 root(ERROR, ['STDOUT'])
-logger("grails-app", ERROR, ['STDOUT'],true)
+logger("grails.app", INFO, ['STDOUT'],false)
