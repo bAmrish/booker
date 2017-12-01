@@ -1,5 +1,6 @@
 package booker
 
+import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
 import com.rabbitmq.client.ShutdownListener
@@ -65,6 +66,31 @@ class RabbitMQService implements ShutdownListener{
             connection = null
         }
 
+    }
+
+    Channel createChannel(){
+        if(connection !== null){
+            try {
+                connection.createChannel()
+            } catch (Exception e){
+                log.error """Failed to create channel.""", e
+            }
+        }
+
+        return null;
+    }
+
+    void closeChannel(Channel channel){
+        if(channel != null && !channel.isOpen()){
+            try{
+                channel.close()
+            } catch (Exception e) {
+                log.error """Failed to close the channel $channel""", e
+            }
+
+        }else {
+            log.error """Failed to close the channel $channel"""
+        }
     }
 }
 
