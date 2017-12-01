@@ -4,6 +4,7 @@ import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client.AMQP.Queue.BindOk
 import com.rabbitmq.client.AMQP.Exchange.DeclareOk
 import com.rabbitmq.client.Channel
+import com.rabbitmq.client.GetResponse
 import grails.transaction.Transactional
 
 @Transactional
@@ -110,5 +111,31 @@ class UserMessengerService {
             }
         })
 
+    }
+
+    List<Map<String, Object>> getMessages(String user){
+        def queueName = getUserInboxQueueName(user)
+        def exchangeName = USER_INBOX_EXCHANGE_NAME
+
+        mqService.call(new ChannelCallable<List<String>>() {
+            @Override
+            String getDescription() {
+                return "Fetching messages for $user."
+            }
+
+            @Override
+            List<Map<String, Object>> call(Channel channel) throws IOException {
+                List<Map<String, Object>> messages = []
+                GetResponse response =  channel.basicGet(queueName, true)
+                while(response != null){
+                    Map message = [:]
+                    message.id = response.props.messageId
+                    message.content =  new String(response.body, response.props.contentEncoding)
+                    messages << message
+                    response =  channel.basicGet(queueName, true)
+                }
+                return messages
+            }
+        })
     }
 }

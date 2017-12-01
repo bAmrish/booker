@@ -16,7 +16,7 @@ class UserMessageController {
     def userMessengerService
 
     @ApiOperation(
-            value = 'Login an user',
+            value = 'Send Message to User',
             nickname = 'user/message/',
             produces = 'application/json',
             consumes = 'application/json',
@@ -48,4 +48,35 @@ class UserMessageController {
         String messageId = userMessengerService.sendMessageToUser(message, user)
         render (["id": messageId]) as JSON
     }
+
+    @ApiOperation(
+            value = 'Get Messages for User',
+            nickname = 'user/{user}/messages/',
+            produces = 'application/json',
+            consumes = 'application/json',
+            httpMethod = 'GET'
+    )
+    @ApiResponses([
+            @ApiResponse(code = 405,
+                    message = 'Method Not Allowed. Only POST is allowed'
+            ),
+
+            @ApiResponse(code = 404,
+                    message = 'Method Not Found'
+            )
+    ])
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = "user",
+                    paramType = "path",
+                    required = true,
+                    value = "Message to be posted",
+                    dataType = "String"
+            )
+    ])
+    def getMessage() {
+        String user = params.user
+        List<String> messages = userMessengerService.getMessages(user)
+        render ([messages: messages]) as JSON
+    }
+
 }

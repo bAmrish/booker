@@ -22,6 +22,7 @@ class UrlMappings {
         post "/log/$message"(controller: "logTesting", action: "log")
 
         post "/user/login/$username" (controller: "user", action: "login")
+        get "/user/$user/messages/" (controller: "userMessage", action: "getMessage")
         post "/user/message/" (controller: "userMessage", action: "sendMessage")
 
         "/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")
