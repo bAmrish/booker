@@ -136,7 +136,7 @@ environments:
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 app:
   couchdb:
-    url: ${COUCH_DB_SERVER_URL}
+    url: "${COUCH_DB_SERVER_URL}"
 
 swagger:
   info:
