@@ -7,8 +7,8 @@ services:
   booker:
     image: bamrish/booker:0.1
     environment:
-      - COUCH_DB_SERVER=couchdb
+      - COUCH_DB_SERVER_URL=http://couchdb:5984/
     ports:
-      - "9091: 8080"
+      - "9091:8080"
     depends_on:
       - couchdb

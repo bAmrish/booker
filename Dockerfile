@@ -8,7 +8,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 ENV CATALINA_HOME /opt/tomcat
 
-RUN curl -O http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.5.23/bin/apache-tomcat-8.5.23.tar.gz
+RUN curl -O http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.5.24/bin/apache-tomcat-8.5.24.tar.gz
 
 RUN mkdir /opt/tomcat
 
