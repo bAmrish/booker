@@ -1,0 +1,23 @@
+version: "3.4"
+services:
+  couchdb:
+    image: apache/couchdb
+    ports:
+      - "5981:5984"
+    volumes:
+      - type: volume
+        source: couchdb-data
+        target: /opt/couchdb/data
+        volume:
+          nocopy: true
+  bookerapp:
+    image: amuthanarulraj/bookerapp:latest
+    ports:
+      - "9080:8080"
+    environment:
+      COUCH_DB_SERVER_URL: 'http://couchdb:5984'
+    depends_on:
+      - couchdb
+volumes:
+  couchdb-data:
+
